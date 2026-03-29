@@ -61,7 +61,6 @@ class ExamSystem:
 # 程序入口（测试任务1）
 # ======================
 if __name__ == "__main__":
-    # 请把你的txt文件放在和这个py文件同目录下，文件名改为：人工智能编程语言学生名单.txt
     system = ExamSystem("人工智能编程语言学生名单.txt")
     system.search_menu()
 
@@ -69,14 +68,14 @@ if __name__ == "__main__":
         shuffled_stus = random.sample(self.students, len(self.students))
 
         now = time.strftime("%Y-%m-%d %H:%M:%S") # 生成当前时间
-        with open("考场安排表.txt", "w", encoding="utf-8") as f:
+        with open("考场安排表.txt", "w", encoding="utf-8") as f:#新建txt方便用户查看安排表
             f.write(f"生成时间：{now}\n")
-            f.write("------------------------\n")
+            f.write("------------------------\n")#此处便于美观，将时间与下面的座位分开
 
-            for idx, stu in enumerate(shuffled_stus, start=1):
+            for idx, stu in enumerate(shuffled_stus, start=1):#随机生成
                 f.write(f"座位号：{idx}  姓名：{stu.name}  学号：{stu.student_id}\n")
 
-        print("✅ 考场安排表已生成：考场安排表.txt")
+        print("✅ 考场安排表已生成：考场安排表.txt")#用以表现程序的进度
 
 if __name__ == "__main__":
     system = ExamSystem("人工智能编程语言学生名单.txt")
