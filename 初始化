@@ -77,6 +77,34 @@ if __name__ == "__main__":
 
         print("✅ 考场安排表已生成：考场安排表.txt")#用以表现程序的进度
 
+
+def generate_admission_tickets(self):
+    root_folder = "准考证文件夹"#明确文件名，方便用户
+    if not os.path.exists(root_folder):
+        os.mkdir(root_folder)
+        print(f"✅ 创建根文件夹：{root_folder}")
+
+
+    for stu in self.students: #给每个学生生成准考证。命名为学号
+        stu_folder = os.path.join(root_folder, stu.student_id)
+        if not os.path.exists(stu_folder):
+            os.mkdir(stu_folder)
+        ticket_file = os.path.join(stu_folder, f"{stu.student_id}_准考证.txt")
+        with open(ticket_file, "w", encoding="utf-8") as f:#输入准考证的内容
+            f.write("=" * 30 + "\n")
+            f.write("          考 试 准 考 证\n")
+            f.write("=" * 30 + "\n\n")
+            f.write(f"学号：{stu.student_id}\n")
+            f.write(f"姓名：{stu.name}\n")
+            f.write(f"性别：{stu.gender}\n")
+            f.write(f"班级：{stu.cls}\n")
+            f.write(f"学院：{stu.college}\n\n")
+            f.write(f"生成时间：{time.strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write("=" * 30 + "\n")
+
+    print("✅ 所有学生准考证已生成完成！")
+
 if __name__ == "__main__":
     system = ExamSystem("人工智能编程语言学生名单.txt")
-    system.search_menu()
+    system.generate_admission_tickets()
+
