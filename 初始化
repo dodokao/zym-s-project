@@ -1,22 +1,23 @@
 import os
 from typing import List
 
-class Student:
+class Student:#先初始化数据，选择用字符串类型，同时用类分装
     def __init__(self, student_id: str, name: str, gender: str, cls: str, college: str):
-        self.student_id = student_id 
-        self.name = name             
-        self.gender = gender         
-        self.cls = cls              
-        self.college = college       
+        self.student_id = student_id  # 学号
+        self.name = name              # 姓名
+        self.gender = gender          # 性别
+        self.cls = cls                # 班级
+        self.college = college        # 学院
 
     def __str__(self):
         return f"学号：{self.student_id} | 姓名：{self.name} | 性别：{self.gender} | 班级：{self.cls} | 学院：{self.college}"
 
+# 任务1：信息初始化与查找
 class ExamSystem:
     def __init__(self, filename: str):
         self.filename = filename
         self.students: List[Student] = []
-        self.load_students()  
+        self.load_students()  # 读取在同一个文件夹中的文件（这一步需要在给ai提示词时说明文件所在位置）
 
     def load_students(self):
         try:#用try except处理潜在异常（filenofounderror 类型的异常）
@@ -24,7 +25,7 @@ class ExamSystem:
                 next(f)
                 for line in f:
                     line = line.strip()
-                    if not line:
+                    if not line:#此处去掉第一行的内容，留下的是学生名单
                         continue
                     parts = line.split()
                     if len(parts) >= 6:#此处用于确保数据是正确的，没有少名字、学号等内容
@@ -35,3 +36,29 @@ class ExamSystem:
         except FileNotFoundError:
             print(f"❌ 错误：未找到文件 {self.filename}，请确认文件在程序同目录下！")
             self.students = []
+
+    def find_student_by_id(self, student_id: str) -> Student | None:
+        for stu in self.students:#根据学号查找对应的学生
+            if stu.student_id == student_id:
+                return stu
+        return None#没找到返回none
+
+    def search_menu(self):
+        if not self.students:
+            print("❌ 暂无学生信息，请先确认名单文件！")
+            return
+        stu_id = input("请输入要查询的学号：").strip()#主动发问让用户明白干什么，符合：面向对象
+        stu = self.find_student_by_id(stu_id)
+        if stu:
+            print("\n📄 学生信息如下：")
+            print(stu)
+        else:
+            print(f"❌ 未找到学号为【{stu_id}】的学生:)")#学号不存在时，给出友好的提示  :）
+
+# ======================
+# 程序入口（测试任务1）
+# ======================
+if __name__ == "__main__":
+    # 请把你的txt文件放在和这个py文件同目录下，文件名改为：人工智能编程语言学生名单.txt
+    system = ExamSystem("人工智能编程语言学生名单.txt")
+    system.search_menu()
