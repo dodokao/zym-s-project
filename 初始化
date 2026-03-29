@@ -1,0 +1,33 @@
+import os
+from typing import List
+
+class Student:
+    def __init__(self, student_id: str, name: str, gender: str, cls: str, college: str):
+        self.student_id = student_id
+        self.name = name
+        self.gender = gender
+        self.cls = cls
+        self.college = college
+
+    def __str__(self):
+        return f"学号：{self.student_id} | 姓名：{self.name} | 性别：{self.gender} | 班级：{self.cls} | 学院：{self.college}"
+
+class ExamSystem:
+    def __init__(self, filename: str):
+        self.filename = filename
+        self.students: List[Student] = []
+        self.load_students()
+
+    def load_students(self):
+        with open(self.filename, 'r', encoding='utf-8') as f:
+            next(f)
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split()
+                if len(parts) >= 6:
+                    _, name, gender, cls, student_id, college = parts
+                    stu = Student(student_id, name, gender, cls, college)
+                    self.students.append(stu)
+        print(f"✅ 成功加载 {len(self.students)} 名学生信息")
