@@ -82,6 +82,11 @@ def generate_admission_tickets(self):
     try:
         if not os.path.exists(root_folder):
             os.mkdir(root_folder)
+        total = len(self.students)  # 定义总人数
+        for i, stu in enumerate(self.students, start=1):#新函数
+            stu_folder = os.path.join(root_folder, stu.student_id)
+            if not os.path.exists(stu_folder):
+                os.mkdir(stu_folder)
         for stu in self.students:
             stu_folder = os.path.join(root_folder, stu.student_id)
             if not os.path.exists(stu_folder):
@@ -105,7 +110,11 @@ def generate_admission_tickets(self):
         print("❌ 错误：没有权限创建文件夹或文件，请检查目录权限！")
     except OSError as e:
         print(f"❌ 生成准考证时发生错误：{str(e)}")
-    print("✅ 所有学生准考证已生成完成！")
+
+if __name__ == "__main__":
+    system = ExamSystem("人工智能编程语言学生名单.txt")
+    system.generate_admission_tickets()
+
 
 if __name__ == "__main__":
     system = ExamSystem("人工智能编程语言学生名单.txt")
