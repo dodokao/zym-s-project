@@ -80,6 +80,15 @@ if __name__ == "__main__":
     system = ExamSystem("人工智能编程语言学生名单.txt")
     system.search_menu()
 
+def random_call(self):#随机点名功能
+    if not self.students:
+        print("❌ 暂无学生信息，无法点名")
+        return
+    
+    import random
+    stu = random.choice(self.students)
+    print("\n🎉 随机点名结果：")
+
     def generate_exam_table(self):# 随机打乱学生
         shuffled_stus = random.sample(self.students, len(self.students))
 
